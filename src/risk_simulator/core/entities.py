@@ -6,6 +6,8 @@ el estado de una batalla.
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 # Limite superior de tropas definido en la especificacion.
@@ -51,7 +53,7 @@ class BattleState(BaseModel):
         return self.defender_is_defeated() or not self.attacker_can_attack()
 
     @property
-    def winner(self) -> str | None:
+    def winner(self) -> Literal["attacker", "defender"] | None:
         """Devuelve el bando ganador, o None si la batalla no ha terminado.
 
         Returns:
@@ -64,3 +66,4 @@ class BattleState(BaseModel):
         if self.defender_is_defeated():
             return "attacker"
         return "defender"
+
