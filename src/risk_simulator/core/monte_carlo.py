@@ -41,7 +41,7 @@ class MonteCarloResult(BaseModel):
         p90_rounds: Percentil 90 de rondas.
         expected_cost_if_win: Coste esperado en tropas si el atacante gana.
         expected_cost_per_success: Coste por conquista exitosa
-            (coste_si_gana / prob_victoria).
+            (expected_cost_if_win / attacker_win_prob).
     """
 
     attacker: int
@@ -175,7 +175,7 @@ def run_monte_carlo(
     p90_rounds = _percentile(sorted_rounds, 90)
 
     # --- Metricas de decision ---
-    cost_if_win = avg_att_surv and (att_n - avg_att_surv) or 0.0
+    cost_if_win = (att_n - avg_att_surv) if avg_att_surv > 0 else 0.0
     cost_per_success = cost_if_win / attacker_win_prob if attacker_win_prob > 0 else float("inf")
 
     return MonteCarloResult(
