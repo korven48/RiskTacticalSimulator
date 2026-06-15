@@ -1,6 +1,7 @@
 """Script para poblar la base de datos con escenarios comunes de Risk."""
 
 import argparse
+import random
 import sys
 import time
 from pathlib import Path
@@ -22,9 +23,15 @@ def main() -> None:
     parser.add_argument(
         "--db-path", type=str, default="scenarios.db", help="Ruta de la base de datos SQLite."
     )
+    parser.add_argument(
+        "--seed", type=int, default=None, help="Semilla aleatoria para resultados reproducibles."
+    )
     args = parser.parse_args()
 
     repo = SQLiteScenarioRepository(db_path=args.db_path)
+
+    # Crear el generador de numeros aleatorios con semilla opcional
+    rng = random.Random(args.seed) if args.seed is not None else None
 
     # Risk: atacantes desde 2 hasta 20 (minimo 2 para atacar), defensores 1 hasta 20
     attackers = range(2, 21)
@@ -34,12 +41,15 @@ def main() -> None:
     count = 0
 
     print(f"Poblando {total_scenarios} escenarios con {args.simulations} simulaciones cada uno...")
+    if args.seed is not None:
+        print(f"Usando semilla aleatoria estricta: {args.seed}")
+
     start_time = time.time()
 
     for attacker in attackers:
         for defender in defenders:
             initial_state = BattleState(attacker=attacker, defender=defender)
-            result = run_monte_carlo(initial_state, simulations=args.simulations)
+            result = run_monte_carlo(initial_state, simulations=args.simulations, rng=rng)
             repo.save(result)
             count += 1
             if count % 50 == 0:
