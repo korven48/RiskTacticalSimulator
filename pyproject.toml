@@ -24,6 +24,9 @@ dev = [
 src = ["src", "tests"]
 line-length = 100
 
+[tool.ruff.format]
+line-ending = "lf"
+
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
 
