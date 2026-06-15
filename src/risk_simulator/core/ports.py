@@ -6,8 +6,9 @@ deben implementar para comunicarse con el nucleo del simulador.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Literal, Protocol
+
+from pydantic import BaseModel, Field
 
 from risk_simulator.core.monte_carlo import MonteCarloResult
 
@@ -29,20 +30,26 @@ OrderByField = Literal[
 ]
 
 
-@dataclass(frozen=True)
-class ScenarioQuery:
+class ScenarioQuery(BaseModel):
     """Filtros tipados para buscar escenarios en el repositorio.
 
     Todos los campos son opcionales. Los que se dejan en None se ignoran
     al construir la consulta.
     """
 
-    attacker: int | None = None
-    defender: int | None = None
-    min_attacker_win_prob: float | None = None
-    max_expected_cost_per_success: float | None = None
-    order_by: OrderByField = "attacker_win_prob DESC"
-    limit: int = 5
+    attacker: int | None = Field(default=None, description="Fija el numero de atacantes exacto.")
+    defender: int | None = Field(default=None, description="Fija el numero de defensores exacto.")
+    min_attacker_win_prob: float | None = Field(
+        default=None, description="Probabilidad minima de victoria (0.0 a 1.0).", ge=0.0, le=1.0
+    )
+    max_expected_cost_per_success: float | None = Field(
+        default=None, description="Coste maximo esperado por exito en tropas."
+    )
+    order_by: OrderByField = Field(
+        default="attacker_win_prob DESC",
+        description="Criterio de ordenacion SQL para los resultados.",
+    )
+    limit: int = Field(default=5, description="Cantidad maxima de resultados a devolver.", le=20)
 
 
 # ---------------------------------------------------------------------------
