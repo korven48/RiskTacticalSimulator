@@ -32,3 +32,8 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra --strict-markers --strict-config"
 
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+]
+
