@@ -13,6 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
+risk-agent = "risk_simulator.cli.run_agent:main"
 populate-db = "risk_simulator.cli.populate:main"
 
 [build-system]
