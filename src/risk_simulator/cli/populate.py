@@ -2,12 +2,7 @@
 
 import argparse
 import random
-import sys
 import time
-from pathlib import Path
-
-# Anadir el directorio src al path si se ejecuta directamente
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from risk_simulator.core.entities import BattleState
 from risk_simulator.core.monte_carlo import run_monte_carlo

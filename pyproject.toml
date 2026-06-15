@@ -1,5 +1,5 @@
 [project]
-name = "risk-tactical-simulator"
+name = "risk-simulator"
 version = "0.1.0"
 description = "Motor de simulacion tactica de combate basado en las reglas del Risk"
 readme = "README.md"
@@ -12,6 +12,12 @@ dependencies = [
     "langchain-core>=0.2.0",
 ]
 
+[project.scripts]
+populate-db = "risk_simulator.cli.populate:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 
 
