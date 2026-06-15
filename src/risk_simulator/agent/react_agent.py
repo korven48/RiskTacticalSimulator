@@ -2,6 +2,7 @@
 
 from typing import Literal
 
+from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
@@ -45,6 +46,7 @@ INSTRUCCIONES DE RESPUESTA:
 def get_agent(provider: Literal["openai", "ollama"] = "ollama", model_name: str | None = None):
     """Crea y devuelve el agente ReAct configurado."""
     # Inicializamos el modelo LLM
+    llm: BaseChatModel
     if provider == "openai":
         model = model_name or "gpt-4o-mini"
         llm = ChatOpenAI(model=model, temperature=0.1)
