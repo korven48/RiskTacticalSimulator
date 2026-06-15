@@ -28,13 +28,9 @@ def dice_count(attacker: int, defender: int) -> tuple[int, int]:
             no tiene tropas (< 1).
     """
     if attacker < 2:
-        raise ValueError(
-            f"El atacante necesita al menos 2 tropas para atacar, tiene: {attacker}"
-        )
+        raise ValueError(f"El atacante necesita al menos 2 tropas para atacar, tiene: {attacker}")
     if defender < 1:
-        raise ValueError(
-            f"El defensor necesita al menos 1 tropa, tiene: {defender}"
-        )
+        raise ValueError(f"El defensor necesita al menos 1 tropa, tiene: {defender}")
 
     alpha = min(attacker - 1, 3)
     delta = min(defender, 2)

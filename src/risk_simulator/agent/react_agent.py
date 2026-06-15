@@ -58,9 +58,5 @@ def get_agent(provider: Literal["openai", "ollama"] = "ollama", model_name: str 
     tools = [get_scenario, search_scenarios]
 
     # Creamos el agente ReAct de LangGraph
-    agent = create_react_agent(
-        llm,
-        tools=tools,
-        prompt=SYSTEM_PROMPT
-    )
+    agent = create_react_agent(llm, tools=tools, prompt=SYSTEM_PROMPT)
     return agent

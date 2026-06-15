@@ -29,7 +29,6 @@ class BattleState(BaseModel):
         "frozen": True,
     }
 
-
     def attacker_can_attack(self) -> bool:
         """El atacante puede lanzar dados si tiene al menos 2 tropas.
 
@@ -66,4 +65,3 @@ class BattleState(BaseModel):
         if self.defender_is_defeated():
             return "attacker"
         return "defender"
-

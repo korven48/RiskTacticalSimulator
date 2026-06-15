@@ -201,9 +201,7 @@ class TestResolveRound:
         # Par 1: 6 vs 5 -> defensor pierde
         # Par 2: 4 vs 4 -> atacante pierde (empate)
         rng = random.Random(0)
-        with patch.object(
-            rng, "randint", side_effect=[6, 4, 1, 5, 4]
-        ):
+        with patch.object(rng, "randint", side_effect=[6, 4, 1, 5, 4]):
             result = resolve_round(state, rng)
 
         assert result.attacker == 4  # 5 - 1 = 4
